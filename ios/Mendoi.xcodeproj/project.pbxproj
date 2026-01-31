@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB3C7BA1713C4E5C8507208F /* loading-animation.json in Resources */ = {isa = PBXBuildFile; fileRef = B092D20ED81F4D6C8B038633 /* loading-animation.json */; };
 		105DA23A3AB78FAC15CD5233 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCF2134CC19115441CEA509C /* AuthManager.swift */; };
 		24A4F5458E3CFAA6AF3B5EB2 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD068BC05E9DA1CDCA36D08E /* SpeechRecognizer.swift */; };
 		283155D283C11385B25761F5 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BDF2ED624A78086E9A41C0 /* APIClient.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B092D20ED81F4D6C8B038633 /* loading-animation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Mendoi/Resources/loading-animation.json"; sourceTree = "<group>"; };
 		0121FD150A5662F9937E26E3 /* MicroStepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroStepTests.swift; sourceTree = "<group>"; };
 		01BDF2ED624A78086E9A41C0 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		154B2C5900844EFCE21D1EDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB3C7BA1713C4E5C8507208F /* loading-animation.json in Resources */,
 				307E2B5EB83D5A4A7DC8FF9E /* Assets.xcassets in Resources */,
 				EDE1789BA171612D8D518DDD /* GoogleService-Info.plist in Resources */,
 			);

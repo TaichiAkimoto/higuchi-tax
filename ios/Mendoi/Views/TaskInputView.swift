@@ -1,4 +1,5 @@
 import SwiftUI
+import Lottie
 
 @available(iOS 16.0, macOS 12.0, *)
 struct TaskInputView: View {
@@ -33,16 +34,32 @@ struct TaskInputView: View {
             // 入力エリア
             VStack(spacing: 16) {
                 // テキスト入力
-                TextField("例: 封筒を開ける", text: $taskText)
-                    .font(.system(size: 18))
-                    .padding(16)
-                    .background(Color.white)
-                    .cornerRadius(12)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.slate300, lineWidth: 1)
-                    )
-                    .disabled(isLoading)
+                ZStack(alignment: .topLeading) {
+                    // Placeholder
+                    if taskText.isEmpty {
+                        Text("例: 封筒を開ける")
+                            .font(.system(size: 18))
+                            .foregroundColor(.slate400)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 16)
+                            .allowsHitTesting(false)
+                    }
+
+                    // Multi-line text input
+                    TextEditor(text: $taskText)
+                        .font(.system(size: 18))
+                        .scrollContentBackground(.hidden)
+                        .background(Color.clear)
+                        .frame(minHeight: 56, maxHeight: 120)
+                }
+                .padding(16)
+                .background(Color.white)
+                .cornerRadius(12)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.slate300, lineWidth: 1)
+                )
+                .disabled(isLoading)
 
                 // 音声入力ボタン
                 Button(action: handleVoiceInput) {
@@ -82,8 +99,21 @@ struct TaskInputView: View {
             // ボタン
             VStack(spacing: 12) {
                 if isLoading {
-                    ProgressView()
-                        .padding()
+                    VStack(spacing: 24) {
+                        // Lottieアニメーション
+                        LottieView(animation: .named("loading-animation"))
+                            .playing(loopMode: .loop)
+                            .frame(width: 200, height: 200)
+
+                        // ローディングテキスト
+                        Text("AI が考え中...")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.slate600)
+
+                        Text("マイクロステップを作成しています")
+                            .font(.system(size: 14))
+                            .foregroundColor(.slate500)
+                    }
                 } else {
                     PrimaryButton("次へ", variant: .primary) {
                         handleSubmit()
@@ -99,11 +129,6 @@ struct TaskInputView: View {
             .padding(.bottom, 32)
         }
         .padding(.horizontal, 16)
-        .onAppear {
-            Task {
-                await speechRecognizer.requestAuthorization()
-            }
-        }
         .onChange(of: speechRecognizer.recognizedText) { newValue in
             if !newValue.isEmpty && !speechRecognizer.isRecording {
                 taskText = newValue
@@ -117,9 +142,34 @@ struct TaskInputView: View {
         if speechRecognizer.isRecording {
             speechRecognizer.stopRecording()
         } else {
-            do {
-                try speechRecognizer.startRecording()
-            } catch {
+            // 許可状態をチェック
+            switch speechRecognizer.authorizationStatus {
+            case .notDetermined:
+                // 初回タップ時: 許可をリクエスト
+                Task {
+                    await speechRecognizer.requestAuthorization()
+                    // 許可が得られたら録音開始
+                    if speechRecognizer.authorizationStatus == .authorized {
+                        do {
+                            try speechRecognizer.startRecording()
+                        } catch {
+                            errorMessage = "音声認識を開始できませんでした"
+                        }
+                    } else if speechRecognizer.authorizationStatus == .denied {
+                        errorMessage = "音声認識の使用が許可されていません。設定から許可してください。"
+                    }
+                }
+            case .authorized:
+                // 既に許可済み: 録音開始
+                do {
+                    try speechRecognizer.startRecording()
+                } catch {
+                    errorMessage = "音声認識を開始できませんでした"
+                }
+            case .denied, .restricted:
+                // 許可が拒否されている
+                errorMessage = "音声認識の使用が許可されていません。設定から許可してください。"
+            @unknown default:
                 errorMessage = "音声認識を開始できませんでした"
             }
         }

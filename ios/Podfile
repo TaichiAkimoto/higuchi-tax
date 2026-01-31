@@ -8,6 +8,7 @@ target 'Mendoi' do
   # Pods for Mendoi
   pod 'Firebase/Auth'
   pod 'Firebase/Core'
+  pod 'lottie-ios'
 
   target 'MendoiTests' do
     inherit! :search_paths
