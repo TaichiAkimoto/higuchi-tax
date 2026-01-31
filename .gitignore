@@ -22,3 +22,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# iOS
+ios/Pods/
+ios/Podfile.lock
+ios/build/
+ios/DerivedData/
+ios/**/*.xcworkspace/xcuserdata/
+ios/**/*.xcodeproj/xcuserdata/
+ios/**/*.xcodeproj/project.xcworkspace/xcuserdata/
+*.app
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Backend build artifacts
+backend/node_modules/
+backend/dist/
+backend/.terraform/
+backend/terraform.tfstate*
