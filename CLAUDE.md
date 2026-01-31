@@ -25,17 +25,24 @@
   - ✅ アプリ説明文（日本語・英語）
   - 📁 全素材: `~/Desktop/mendoi-app-store-assets/`
 
-### 🔧 次にやること
-**App Store Connect登録** - Claude in Chromeで実施
-1. https://appstoreconnect.apple.com にログイン
-2. 新規アプリ作成
-   - 名前: めんどい
-   - バンドルID: com.taichi.mendoi
-   - プライバシーポリシーURL: https://gist.github.com/TaichiAkimoto/8351aeedfb5e5d875b79a982d64b6a0b
-3. スクリーンショット・アイコンをアップロード
-4. 説明文を入力（`~/Desktop/mendoi-app-store-assets/README.md`参照）
-5. Xcodeアーカイブ作成→アップロード
-6. 審査提出
+### 🎉 App Store審査提出完了！
+- **提出日**: 2026-01-31
+- **バージョン**: 1.0 (Build 1)
+- **ステータス**: 審査待ち
+- **App Store Connect**: https://appstoreconnect.apple.com/apps/6758537966/distribution/ios/version/inflight
+
+**完了した項目**:
+1. ✅ サポートURL: プライバシーポリシー設定
+2. ✅ 13インチiPadスクリーンショット（5枚）
+3. ✅ 連絡先情報入力
+4. ✅ 著作権情報（2026 Taichi Akimoto）
+5. ✅ コンテンツ配信権設定
+6. ✅ 年齢制限指定（4+、全て「なし」）
+7. ✅ 価格設定（無料、174カ国）
+
+**次のステップ**:
+- Appleからの審査結果を待つ（通常24-48時間）
+- 承認後、自動でApp Storeにリリース
 
 ## アーキテクチャ
 
@@ -96,7 +103,35 @@ Cloud Run (Node.js/Express)
 
 ## セッション履歴
 
-### 2026-01-31: App Store提出準備完了
+### 2026-01-31 (3): App Store審査提出成功 🎉
+- **全必須項目完了**: サポートURL、著作権、連絡先、コンテンツ配信権、年齢制限、価格
+- **年齢制限指定**: 7ステップの質問に回答（全て「なし」/「いいえ」）→ 4+評価
+- **価格設定**: 無料、174カ国で配信
+- **iPadスクリーンショット**: CLI（xcrun simctl）で13インチiPad Pro撮影
+  - シミュレータ起動 → アプリビルド → 5枚撮影
+  - `~/Desktop/mendoi-app-store-assets/ipad-screenshots/`
+- **審査提出完了**: 全エラー解消、「審査用に追加」成功
+- **次回**: 審査結果待ち（24-48時間）
+
+### 2026-01-31 (2): App Store Connect審査提出作業中
+- **アプリ登録**: Bundle ID `com.taichi.mendoi` を登録完了
+- **基本情報入力**:
+  - アプリ名、サブタイトル、カテゴリ（仕事効率化、ライフスタイル）
+  - 説明文、キーワード入力完了
+- **スクリーンショット**: iPhone 6.9" 5枚アップロード完了
+- **プライバシー設定**: User ID（Firebase匿名認証）設定完了
+  - 個人情報に関連付けなし
+  - トラッキング使用なし
+- **Xcodeアーカイブ作成**:
+  - 問題: Info.plistに`UIInterfaceOrientationPortraitUpsideDown`欠落
+  - 解決: Info.plistを修正してアーカイブ再作成成功
+  - Team ID: N87AGP76YT (Distribution証明書使用)
+- **ビルドアップロード**: IPA作成・アップロード成功（7.0MB）
+- **輸出コンプライアンス**: 「上記のアルゴリズムのどちらでもない」選択
+- **残タスク**: サポートURL、iPadスクリーンショット、連絡先、著作権、配信権、年齢制限
+- **次回**: 残り5項目を入力して審査提出
+
+### 2026-01-31 (1): App Store提出準備完了
 - **UI改善**: TextField → TextEditor（多行入力対応、ZStackでカスタムプレースホルダー）
 - **権限最適化**: 音声入力権限を初回タップ時に要求（onAppear削除）
 - **Lottieアニメーション**: After Effects MCPで5段階グラデーションステップを作成・統合
