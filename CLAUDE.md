@@ -5,19 +5,37 @@
 ## 現在のステータス
 
 ### ✅ 完了
-- バックエンド: Cloud RunにTerraformでデプロイ完了
+- **バックエンド**: Cloud RunにTerraformでデプロイ完了
   - URL: https://mendoi-api-glhnu2cdda-an.a.run.app
   - Firebase Admin SDKでIDトークン検証実装
   - Rate Limiting: UID単位で10req/分
-- iOS: Firebase匿名認証が動作
-  - GoogleService-Info.plist正常（Firebase API Key使用）
-  - 匿名ログイン成功: UID取得・IDトークンリフレッシュ確認
-  - APIClient: IDトークン付きリクエスト実装済み
+
+- **iOS**: アプリ開発完了
+  - Firebase匿名認証が動作
+  - TextEditor多行入力実装（ZStackでカスタムプレースホルダー）
+  - 音声入力権限を初回タップ時に要求（onAppear削除）
+  - Lottieローディングアニメーション統合（5段階グラデーション）
+  - アプリアイコン設定完了（1024x1024、グラデーション階段デザイン）
+
+- **App Store準備**: 全素材完成
+  - ✅ プライバシーポリシー: https://gist.github.com/TaichiAkimoto/8351aeedfb5e5d875b79a982d64b6a0b
+  - ✅ スクリーンショット5枚（iPhone 16 Pro Max）
+  - ✅ アプリアイコン（1024x1024）
+  - ✅ プレビュー動画（15秒）
+  - ✅ アプリ説明文（日本語・英語）
+  - 📁 全素材: `~/Desktop/mendoi-app-store-assets/`
 
 ### 🔧 次にやること
-1. **E2Eテスト**: シミュレーターでタスク入力→ステップ生成→完了フロー確認
-2. **実機テスト**: 音声入力機能のテスト
-3. **エラーハンドリング確認**: ネットワークエラー、API障害時の挙動
+**App Store Connect登録** - Claude in Chromeで実施
+1. https://appstoreconnect.apple.com にログイン
+2. 新規アプリ作成
+   - 名前: めんどい
+   - バンドルID: com.taichi.mendoi
+   - プライバシーポリシーURL: https://gist.github.com/TaichiAkimoto/8351aeedfb5e5d875b79a982d64b6a0b
+3. スクリーンショット・アイコンをアップロード
+4. 説明文を入力（`~/Desktop/mendoi-app-store-assets/README.md`参照）
+5. Xcodeアーカイブ作成→アップロード
+6. 審査提出
 
 ## アーキテクチャ
 
@@ -44,6 +62,17 @@ Cloud Run (Node.js/Express)
 - `ios/Mendoi/Services/AuthManager.swift` - 匿名認証管理
 - `ios/Mendoi/Services/APIClient.swift` - バックエンドAPI通信
 - `ios/Mendoi/ViewModels/AppViewModel.swift` - メイン状態管理
+- `ios/Mendoi/Views/TaskInputView.swift` - TextEditor実装、音声入力、Lottieアニメーション
+- `ios/Mendoi/Resources/loading-animation.json` - Lottieアニメーションファイル（5.9KB）
+- `ios/Mendoi/Assets.xcassets/AppIcon.appiconset/icon-1024.png` - アプリアイコン
+- `ios/Podfile` - lottie-ios依存関係
+
+### App Store素材
+- `~/Desktop/mendoi-app-store-assets/screenshots/` - 5枚のスクリーンショット
+- `~/Desktop/mendoi-app-store-assets/app-icon-1024.png` - アイコン
+- `~/Desktop/mendoi-app-store-assets/app-preview-video.mp4` - プレビュー動画
+- `~/Desktop/mendoi-app-store-assets/README.md` - 説明文・提出手順
+- `privacy-policy.html` - プライバシーポリシー（Gistで公開済み）
 
 ## 再開方法
 
@@ -66,6 +95,25 @@ Cloud Run (Node.js/Express)
 - **重要**: `.xcworkspace`を使用してビルド（`.xcodeproj`ではない）
 
 ## セッション履歴
+
+### 2026-01-31: App Store提出準備完了
+- **UI改善**: TextField → TextEditor（多行入力対応、ZStackでカスタムプレースホルダー）
+- **権限最適化**: 音声入力権限を初回タップ時に要求（onAppear削除）
+- **Lottieアニメーション**: After Effects MCPで5段階グラデーションステップを作成・統合
+  - `loading-animation.json` (5.9KB) をプロジェクトに追加
+  - `lottie-ios` podを追加
+  - TaskInputView.swiftに統合（200x200、ループ再生）
+- **アプリアイコン**: PiAPI/Midjourneyでグラデーション階段デザイン生成
+- **スクリーンショット**: iPhone 16 Pro Maxシミュレーターで5枚撮影
+  1. スタート画面
+  2. タスク入力画面（空）
+  3. タスク入力画面（入力済み「確定申告の書類を整理する」）
+  4. Lottieローディング画面
+  5. 生成されたステップ画面
+- **プライバシーポリシー**: HTML作成→Gistで公開
+  - URL: https://gist.github.com/TaichiAkimoto/8351aeedfb5e5d875b79a982d64b6a0b
+- **全素材整理**: `~/Desktop/mendoi-app-store-assets/` にまとめ
+- **次回**: Claude in ChromeでApp Store Connect登録
 
 ### 2026-01-30: Firebase認証問題の解決
 - **問題**: GoogleService-Info.plistに誤ったAPI_KEY（Gemini APIキー）が設定
