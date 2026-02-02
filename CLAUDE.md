@@ -40,9 +40,16 @@
 6. ✅ 年齢制限指定（4+、全て「なし」）
 7. ✅ 価格設定（無料、174カ国）
 
+### 🔄 進行中
+- **キャラクターUI検討**: 黒背景+光る目のペットのようなUIを検討
+  - Canvas実装で試したが、デザインが要件に合わず
+  - 全て破棄して元の状態に戻した（TaskInputView維持）
+  - 次回: 別のアプローチでUI改善を検討
+
 **次のステップ**:
 - Appleからの審査結果を待つ（通常24-48時間）
 - 承認後、自動でApp Storeにリリース
+- UI改善案の再検討（キャラクターベースのインタラクション）
 
 ## アーキテクチャ
 
@@ -103,6 +110,18 @@ Cloud Run (Node.js/Express)
 
 ## セッション履歴
 
+### 2026-02-02: キャラクターUI実装試行→Revert
+- **目的**: 黒背景+光る目のペット風UIで音声入力を促進
+- **実装内容**:
+  - CharacterState.swift（4つの表情状態）
+  - CharacterEyesView.swift（Canvas/Path実装、瞬き・パルスアニメーション）
+  - CharacterInputView.swift（音声優先、テキストは代替手段）
+  - AppStage/AppViewModel/ContentView修正
+- **結果**: Xcode project.pbxprojへの手動ファイル追加でビルド成功
+- **判断**: デザインが要件に合わず、全て破棄（git restore + ファイル削除）
+- **学び**: Canvas実装は軽量だが、複雑なビジュアルデザインには向かない
+- **次回**: 画像ベース、または別のアプローチでUI改善を検討
+
 ### 2026-01-31 (3): App Store審査提出成功 🎉
 - **全必須項目完了**: サポートURL、著作権、連絡先、コンテンツ配信権、年齢制限、価格
 - **年齢制限指定**: 7ステップの質問に回答（全て「なし」/「いいえ」）→ 4+評価
@@ -131,29 +150,6 @@ Cloud Run (Node.js/Express)
 - **残タスク**: サポートURL、iPadスクリーンショット、連絡先、著作権、配信権、年齢制限
 - **次回**: 残り5項目を入力して審査提出
 
-### 2026-01-31 (1): App Store提出準備完了
-- **UI改善**: TextField → TextEditor（多行入力対応、ZStackでカスタムプレースホルダー）
-- **権限最適化**: 音声入力権限を初回タップ時に要求（onAppear削除）
-- **Lottieアニメーション**: After Effects MCPで5段階グラデーションステップを作成・統合
-  - `loading-animation.json` (5.9KB) をプロジェクトに追加
-  - `lottie-ios` podを追加
-  - TaskInputView.swiftに統合（200x200、ループ再生）
-- **アプリアイコン**: PiAPI/Midjourneyでグラデーション階段デザイン生成
-- **スクリーンショット**: iPhone 16 Pro Maxシミュレーターで5枚撮影
-  1. スタート画面
-  2. タスク入力画面（空）
-  3. タスク入力画面（入力済み「確定申告の書類を整理する」）
-  4. Lottieローディング画面
-  5. 生成されたステップ画面
-- **プライバシーポリシー**: HTML作成→Gistで公開
-  - URL: https://gist.github.com/TaichiAkimoto/8351aeedfb5e5d875b79a982d64b6a0b
-- **全素材整理**: `~/Desktop/mendoi-app-store-assets/` にまとめ
-- **次回**: Claude in ChromeでApp Store Connect登録
+---
 
-### 2026-01-30: Firebase認証問題の解決
-- **問題**: GoogleService-Info.plistに誤ったAPI_KEY（Gemini APIキー）が設定
-- **解決**:
-  - Claude in Chromeを使用してFirebase Consoleから正しいファイルをダウンロード
-  - API_KEY: `AIzaSyCUQCkwhz7Sz7wi_2j3wdtH9Cva2Ruyo04`（Firebase用）
-  - 匿名認証成功を確認
-- **次回**: E2Eフローのテスト
+**過去のセッション詳細**: [.claude/sessions/README.md](./.claude/sessions/README.md) を参照
