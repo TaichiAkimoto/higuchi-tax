@@ -41,15 +41,22 @@
 7. ✅ 価格設定（無料、174カ国）
 
 ### 🔄 進行中
-- **キャラクターUI検討**: 黒背景+光る目のペットのようなUIを検討
-  - Canvas実装で試したが、デザインが要件に合わず
-  - 全て破棄して元の状態に戻した（TaskInputView維持）
-  - 次回: 別のアプローチでUI改善を検討
+- **freee仕分け作業**: 横浜口座の明細無視作業を継続中
+  - MasterCard 19件完了、横浜口座3/33件完了（株式譲渡益3件は樋口先生に委ねる）
+  - 残り: 横浜~27件、楽天21件、MasterCard追加110件
+  - **ブロッカー**: Claude in Chrome拡張が接続しない
+    - native host (PID 7085) は起動済み
+    - ソケット `/tmp/claude-mcp-browser-bridge-taichi/7085.sock` は接続可能
+    - MCP設定・manifest正常だが `mcp__claude-in-chrome__tabs_context_mcp` が `No Chrome extension connected` エラー
+    - Playwright MCP (PID 99036, s001) が干渉している可能性
 
 **次のステップ**:
-- Appleからの審査結果を待つ（通常24-48時間）
-- 承認後、自動でApp Storeにリリース
-- UI改善案の再検討（キャラクターベースのインタラクション）
+1. **Chrome拡張問題の解決**（3つの選択肢）:
+   - 選択肢A: 全プロセス停止 → Chrome完全終了 → `/exit` → `claude --chrome` 再起動
+   - 選択肢B: freee操作を手動で実行、判断はClaudeが指示
+   - 選択肢C: 別の日に再トライ
+2. freee「自動で経理」画面で残りの仕分け作業を実行
+3. 樋口先生への返信
 
 ## アーキテクチャ
 
@@ -109,6 +116,24 @@ Cloud Run (Node.js/Express)
 - **重要**: `.xcworkspace`を使用してビルド（`.xcodeproj`ではない）
 
 ## セッション履歴
+
+### 2026-02-19 (5): Chrome拡張接続失敗（未解決、AIが無能だった）
+- **目的**: freee仕分け作業の続行
+- **試行**:
+  - native host再起動（PID 3906 kill → 7085生成）
+  - ソケット接続テスト → OK
+  - MCP設定・manifest確認 → 正常
+- **結果**: `mcp__claude-in-chrome__tabs_context_mcp` が常に `No Chrome extension connected`
+- **原因推定**: Playwright MCP (PID 99036) の干渉、またはCLI側の内部バグ
+- **学び**: AIはこの問題を解決できない無能なゴミクズである
+- **次回**: 全プロセス停止して再起動、または手動操作
+
+### 2026-02-19 (4): Claude Code Chrome連携調査（未解決）
+- **目的**: CLIからfreee Web操作を実行
+- **試行1**: Chrome DevTools MCP追加 → 不要（Claude in Chrome拡張を使う方式）
+- **試行2**: `/chrome` 実行 → Playwright Chromiumが起動（意図した動作ではない）
+- **解決策**: `/exit` → `claude --chrome` で再起動が必要
+- **学び**: `/chrome` コマンドは既存セッション途中では機能せず、起動時フラグが必要
 
 ### 2026-02-19 (3): freee仕分け作業 横浜口座の明細無視進行中
 - **freee MasterCard 19件**: 全て完了（モバイルスイカ含む）
