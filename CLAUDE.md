@@ -1,44 +1,24 @@
-# めんどい - iOS App + Cloud Run Backend
+# 樋口税理士事務所とのやり取り記録
 
-認知的負荷により「やりたくないこと」に手をつけられないユーザーを、マイクロステップ分解とAI励ましでサポートする汎用タスク分解アシスタント。
+樋口先生との税務やり取り、確定申告作業、freee仕分け作業の記録。
+
+**リポジトリ情報**:
+- GitHub: https://github.com/TaichiAkimoto/higuchi-tax
+- ローカルパス: `/Users/taichi/new/tax_accountant`
 
 ## 現在のステータス
 
-### ✅ 完了
-- **バックエンド**: Cloud RunにTerraformでデプロイ完了
-  - URL: https://mendoi-api-glhnu2cdda-an.a.run.app
-  - Firebase Admin SDKでIDトークン検証実装
-  - Rate Limiting: UID単位で10req/分
+### ✅ 完了（確定申告e-Tax提出）
+- **e-Tax申告受付確認**: 2026/03/09 08:53:59 受付完了
+  - 受付番号: 20260309085359538114
+  - 納税額: 2,662,600円（検証済み）
+  - 提出先: 神奈川税務署
+  - 年分: 令和07年分（2025年度）
+- **樋口先生への返信文**: 作成済み
 
-- **iOS**: アプリ開発完了
-  - Firebase匿名認証が動作
-  - TextEditor多行入力実装（ZStackでカスタムプレースホルダー）
-  - 音声入力権限を初回タップ時に要求（onAppear削除）
-  - Lottieローディングアニメーション統合（5段階グラデーション）
-  - アプリアイコン設定完了（1024x1024、グラデーション階段デザイン）
-
-- **App Store準備**: 全素材完成
-  - ✅ プライバシーポリシー: https://gist.github.com/TaichiAkimoto/8351aeedfb5e5d875b79a982d64b6a0b
-  - ✅ スクリーンショット5枚（iPhone 16 Pro Max）
-  - ✅ アプリアイコン（1024x1024）
-  - ✅ プレビュー動画（15秒）
-  - ✅ アプリ説明文（日本語・英語）
-  - 📁 全素材: `~/Desktop/mendoi-app-store-assets/`
-
-### 🎉 App Store審査提出完了！
-- **提出日**: 2026-01-31
-- **バージョン**: 1.0 (Build 1)
-- **ステータス**: 審査待ち
-- **App Store Connect**: https://appstoreconnect.apple.com/apps/6758537966/distribution/ios/version/inflight
-
-**完了した項目**:
-1. ✅ サポートURL: プライバシーポリシー設定
-2. ✅ 13インチiPadスクリーンショット（5枚）
-3. ✅ 連絡先情報入力
-4. ✅ 著作権情報（2026 Taichi Akimoto）
-5. ✅ コンテンツ配信権設定
-6. ✅ 年齢制限指定（4+、全て「なし」）
-7. ✅ 価格設定（無料、174カ国）
+### 次のステップ
+1. **樋口先生へメール送信**: 受付確認完了の報告
+2. **納税対応**: 2,662,600円の納付（ダイレクト納付/ATM/スマホアプリ等）
 
 ### ✅ 完了（freee仕分け作業）
 - **MasterCard**: 全123件登録完了
@@ -66,66 +46,20 @@
 1. **樋口先生へメール送信**: 受付確認完了の報告
 2. **納税対応**: 2,662,600円の納付（ダイレクト納付/ATM/スマホアプリ等）
 
-## アーキテクチャ
-
-```
-iOS App (Swift/SwiftUI)
-  ↓ Firebase Anonymous Auth
-  ↓ HTTPS + ID Token
-Cloud Run (Node.js/Express)
-  ↓ Firebase Admin SDK (Token検証)
-  ↓ Gemini API
-```
-
-## 重要ファイル
-
-### バックエンド
-- `backend/src/server.ts` - Expressサーバー
-- `backend/src/routes/steps.ts` - タスク分解エンドポイント
-- `backend/src/services/firebase.ts` - Firebase Admin SDK初期化
-- `backend/src/middleware/auth.ts` - IDトークン検証
-- `backend/terraform/main.tf` - Cloud Runデプロイ設定
-
-### iOS
-- `ios/Mendoi/GoogleService-Info.plist` - Firebase設定（**重要**: Firebase API Key）
-- `ios/Mendoi/Services/AuthManager.swift` - 匿名認証管理
-- `ios/Mendoi/Services/APIClient.swift` - バックエンドAPI通信
-- `ios/Mendoi/ViewModels/AppViewModel.swift` - メイン状態管理
-- `ios/Mendoi/Views/TaskInputView.swift` - TextEditor実装、音声入力、Lottieアニメーション
-- `ios/Mendoi/Resources/loading-animation.json` - Lottieアニメーションファイル（5.9KB）
-- `ios/Mendoi/Assets.xcassets/AppIcon.appiconset/icon-1024.png` - アプリアイコン
-- `ios/Podfile` - lottie-ios依存関係
-
-### App Store素材
-- `~/Desktop/mendoi-app-store-assets/screenshots/` - 5枚のスクリーンショット
-- `~/Desktop/mendoi-app-store-assets/app-icon-1024.png` - アイコン
-- `~/Desktop/mendoi-app-store-assets/app-preview-video.mp4` - プレビュー動画
-- `~/Desktop/mendoi-app-store-assets/README.md` - 説明文・提出手順
-- `privacy-policy.html` - プライバシーポリシー（Gistで公開済み）
-
 ## 再開方法
 
 次回のセッションで「続きから」または「前回の続きを」と言ってください。
 
-または具体的に：
-- 「E2Eテストを実行して」
-- 「実機で音声入力をテストして」
-
-## トラブルシューティング
-
-### Firebase認証エラー（API_KEY_SERVICE_BLOCKED）
-- **原因**: GoogleService-Info.plistに誤ったAPI_KEY
-- **解決**: Firebase ConsoleからiOSアプリ用の正しいGoogleService-Info.plistをダウンロード
-- **確認**: PROJECT_ID=mendoi-d2ebb, BUNDLE_ID=com.taichi.mendoi
-
-### ビルドエラー（Firebase module not found）
-- **原因**: CocoaPods依存関係未インストール
-- **解決**: `cd ios && pod install` 実行
-- **重要**: `.xcworkspace`を使用してビルド（`.xcodeproj`ではない）
-
 ## セッション履歴
 
-### 2026-03-11: e-Tax申告受付内容確認
+### 2026-03-11 (2): リポジトリ名変更・不要ファイル削除
+- **リポジトリ改名**: `TaichiAkimoto/mendoi` → `TaichiAkimoto/higuchi-tax`
+- **フォルダ改名**: `/Users/taichi/new/mendoi` → `/Users/taichi/new/tax_accountant`
+- **不要ファイル削除**: `ios/` と `backend/` を削除（21,474ファイル、5.1M行削除）
+- **Claude設定移行**: `/Users/taichi/.claude/projects/-Users-taichi-new-mendoi/` → `tax_accountant/`
+- **理由**: 実質的に樋口先生との税務やり取り専用リポジトリとして使用しているため、名前を実態に合わせた
+
+### 2026-03-11 (1): e-Tax申告受付内容確認
 - **樋口先生からの連絡**: 3/9にe-Tax申告完了、受付内容確認を依頼された
 - **マイナポータル→e-Tax連携**: QRコード認証でマイナポータルにログイン後、e-Taxメッセージボックスへ遷移
   - パスワード不要でマイナポータル連携により直接アクセス
