@@ -127,7 +127,7 @@ Start with something small, like "open an envelope."
 ### 8. Xcodeアーカイブ作成・アップロード
 
 ```bash
-cd /Users/taichi/new/mendoi/ios
+cd /Users/taichi/new/tax_accountant/ios
 
 # アーカイブ作成
 xcodebuild -workspace Mendoi.xcworkspace \
