@@ -20,13 +20,15 @@
 
 ## 次にやること
 
-- 還付金の入金確認（横浜銀行）— 24年度中間納付分約100万円
-- 令和8年の節税策・法人化の相談（繰越損失の活用含む）
+- 🔴 カナリー株の取得経緯確認（平成30年取得・15,400株の実際の取得費を調べる）
+- 📝 取得費が実額あれば樋口先生に更正の請求を依頼（期限：令和12年3月まで）
+- 📝 繰越損失△265万円を令和8年以降の事業所得で活用
+- ⏩ 還付金の入金確認（横浜銀行・24年度中間納付分約100万円）
 
 ## 直近2セッション
 
-- **Session (2026-06-09)**: 令和7年分確定申告書類PDF（15ページ）を全読込み・体系整理。詳細: [`.claude/sessions/2026-06-09-tax-return-review.md`](.claude/sessions/2026-06-09-tax-return-review.md)
-- **Session (2026-05-11)**: 樋口先生から還付金連絡への返信文作成。詳細: [`.claude/sessions/2026-05-11-higuchi-refund-reply.md`](.claude/sessions/2026-05-11-higuchi-refund-reply.md)
+- **Session (2026-06-09 #2)**: 市民税通知書を検証。882,900円は適正と確認。キャピタルゲイン優遇税率・申告分離課税の解説PDF作成。詳細: [`.claude/sessions/2026-06-09-tax-municipal-tax-review.md`](.claude/sessions/2026-06-09-tax-municipal-tax-review.md)
+- **Session (2026-06-09 #1)**: 令和7年分確定申告書類PDF（15ページ）を全読込み・体系整理。詳細: [`.claude/sessions/2026-06-09-tax-return-review.md`](.claude/sessions/2026-06-09-tax-return-review.md)
 
 **それ以前**: [.claude/sessions/README.md](.claude/sessions/README.md)
 
