@@ -24,11 +24,12 @@
 - 📝 取得費が実額あれば樋口先生に更正の請求を依頼（期限：令和12年3月まで）
 - 📝 繰越損失△265万円を令和8年以降の事業所得で活用
 - ⏩ 還付金の入金確認（横浜銀行・24年度中間納付分約100万円）
+- 🔴 目黒区国保料の残り5期（11/30, 1/4, 2/1, 3/1, 3/31）の納付 or 口座振替申込。転入前自治体からの追加請求の有無も確認
 
 ## 直近2セッション
 
+- **Session (2026-11-12)**: 目黒区の国保料通知書（559,999円・上限額）を検証し正しいと確認。納付書をPayPayで支払い。詳細: [`.claude/sessions/2026-11-12-meguro-kokuho-notice.md`](.claude/sessions/2026-11-12-meguro-kokuho-notice.md)
 - **Session (2026-06-09 #2)**: 市民税通知書を検証。882,900円は適正と確認。キャピタルゲイン優遇税率・申告分離課税の解説PDF作成。詳細: [`.claude/sessions/2026-06-09-tax-municipal-tax-review.md`](.claude/sessions/2026-06-09-tax-municipal-tax-review.md)
-- **Session (2026-06-09 #1)**: 令和7年分確定申告書類PDF（15ページ）を全読込み・体系整理。詳細: [`.claude/sessions/2026-06-09-tax-return-review.md`](.claude/sessions/2026-06-09-tax-return-review.md)
 
 **それ以前**: [.claude/sessions/README.md](.claude/sessions/README.md)
 
